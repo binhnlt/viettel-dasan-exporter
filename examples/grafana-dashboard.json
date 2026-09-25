@@ -1,0 +1,1075 @@
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "graphTooltip": 1,
+  "title": "Viettel DASAN H646GM-V - GPON modem",
+  "uid": "viettel-dasan-h646",
+  "tags": [
+    "viettel",
+    "dasan",
+    "gpon",
+    "modem",
+    "network"
+  ],
+  "timezone": "",
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "refresh": "1m",
+  "schemaVersion": 39,
+  "templating": {
+    "list": []
+  },
+  "panels": [
+    {
+      "type": "row",
+      "title": "Device",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "collapsed": false
+    },
+    {
+      "type": "stat",
+      "title": "Reachable",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 0,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red"
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green"
+                }
+              }
+            }
+          ],
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none"
+      },
+      "targets": [
+        {
+          "expr": "modem_up",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Uptime",
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 3,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dtdurations",
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          }
+        }
+      },
+      "options": {
+        "colorMode": "none",
+        "graphMode": "none"
+      },
+      "targets": [
+        {
+          "expr": "modem_uptime_seconds",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Fibre (PON) link",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 7,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red"
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green"
+                }
+              }
+            }
+          ],
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none"
+      },
+      "targets": [
+        {
+          "expr": "modem_pon_link_up",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Internet (WAN)",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 10,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "DOWN",
+                  "color": "red"
+                },
+                "1": {
+                  "text": "UP",
+                  "color": "green"
+                }
+              }
+            }
+          ],
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none"
+      },
+      "targets": [
+        {
+          "expr": "max(modem_wan_connection_up{service=~\".*INTERNET.*\",ip_version=\"ipv4\"})",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "CPU",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 13,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none"
+      },
+      "targets": [
+        {
+          "expr": "modem_cpu_usage_percent",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Memory",
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 16,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none"
+      },
+      "targets": [
+        {
+          "expr": "modem_memory_usage_percent",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Rx optical power",
+      "gridPos": {
+        "h": 4,
+        "w": 5,
+        "x": 19,
+        "y": 1
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "dBm",
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": -27
+              },
+              {
+                "color": "green",
+                "value": -25
+              },
+              {
+                "color": "orange",
+                "value": -8
+              },
+              {
+                "color": "red",
+                "value": -7
+              }
+            ]
+          }
+        }
+      },
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none"
+      },
+      "targets": [
+        {
+          "expr": "modem_optical_rx_power_dbm",
+          "refId": "A"
+        }
+      ],
+      "description": "GPON class B+ receiver: roughly -8 to -27 dBm is healthy; below -27 dBm the link is at risk."
+    },
+    {
+      "type": "table",
+      "title": "Device information",
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "options": {
+        "showHeader": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left"
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "modem_info",
+          "instant": true,
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "Value": true,
+              "job": true,
+              "instance": true,
+              "modem": true,
+              "device": true
+            },
+            "renameByName": {
+              "model": "Model",
+              "software_version": "Firmware",
+              "serial_number": "Serial",
+              "mac_address": "MAC",
+              "mac_oui": "OUI",
+              "pon_mode": "PON",
+              "pon_version": "PON version",
+              "olt_type": "OLT",
+              "optical_type": "Optics",
+              "customer": "ISP"
+            },
+            "indexByName": {
+              "model": 0,
+              "software_version": 1,
+              "serial_number": 2,
+              "mac_address": 3,
+              "pon_mode": 4,
+              "olt_type": 5,
+              "optical_type": 6,
+              "customer": 7
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "WAN connections",
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "options": {
+        "showHeader": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left"
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "modem_wan_info",
+          "instant": true,
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "Value": true,
+              "job": true,
+              "instance": true,
+              "modem": true,
+              "device": true
+            },
+            "renameByName": {
+              "wan": "WAN",
+              "kind": "Kind",
+              "service": "Service",
+              "connection_type": "Type",
+              "external_ip": "Public IP",
+              "gateway": "Gateway",
+              "dns_servers": "DNS",
+              "ipv6_address": "IPv6 address",
+              "ipv6_prefix": "IPv6 prefix",
+              "vlan": "VLAN",
+              "mac_address": "MAC"
+            },
+            "indexByName": {
+              "wan": 0,
+              "service": 1,
+              "connection_type": 2,
+              "external_ip": 3,
+              "gateway": 4,
+              "dns_servers": 5,
+              "ipv6_address": 6,
+              "ipv6_prefix": 7,
+              "vlan": 8
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "title": "Internet traffic",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "collapsed": false
+    },
+    {
+      "type": "timeseries",
+      "title": "WAN throughput",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 15
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10
+          },
+          "unit": "bps"
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(modem_interface_rx_bytes_total{type=\"wan\",service=~\".*INTERNET.*\"}[5m]) * 8",
+          "legendFormat": "download {{interface}}",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(modem_interface_tx_bytes_total{type=\"wan\",service=~\".*INTERNET.*\"}[5m]) * 8",
+          "legendFormat": "upload {{interface}}",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Fibre (PON) throughput",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 15
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10
+          },
+          "unit": "bps"
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(modem_interface_rx_bytes_total{type=\"pon\"}[5m]) * 8",
+          "legendFormat": "rx",
+          "refId": "A"
+        },
+        {
+          "expr": "rate(modem_interface_tx_bytes_total{type=\"pon\"}[5m]) * 8",
+          "legendFormat": "tx",
+          "refId": "B"
+        }
+      ],
+      "description": "All traffic on the fibre port, including IPTV multicast and management VLANs."
+    },
+    {
+      "type": "row",
+      "title": "Fibre optics",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "collapsed": false
+    },
+    {
+      "type": "timeseries",
+      "title": "Optical power",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 24
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10
+          },
+          "unit": "dBm"
+        }
+      },
+      "targets": [
+        {
+          "expr": "modem_optical_rx_power_dbm",
+          "legendFormat": "Rx",
+          "refId": "A"
+        },
+        {
+          "expr": "modem_optical_tx_power_dbm",
+          "legendFormat": "Tx",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Transceiver temperature",
+      "gridPos": {
+        "h": 8,
+        "w": 5,
+        "x": 8,
+        "y": 24
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10
+          },
+          "unit": "celsius"
+        }
+      },
+      "targets": [
+        {
+          "expr": "modem_optical_temperature_celsius",
+          "legendFormat": "temperature",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Supply voltage",
+      "gridPos": {
+        "h": 8,
+        "w": 5,
+        "x": 13,
+        "y": 24
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10
+          },
+          "unit": "volt"
+        }
+      },
+      "targets": [
+        {
+          "expr": "modem_optical_supply_voltage_volts",
+          "legendFormat": "voltage",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Laser bias current",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 24
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10
+          },
+          "unit": "mamp"
+        }
+      },
+      "targets": [
+        {
+          "expr": "modem_optical_bias_current_milliamps",
+          "legendFormat": "bias",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "title": "LAN & Wi-Fi",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "collapsed": false
+    },
+    {
+      "type": "timeseries",
+      "title": "Receive per interface",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 33
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10
+          },
+          "unit": "bps"
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(modem_interface_rx_bytes_total{type=~\"lan|wlan\"}[5m]) * 8",
+          "legendFormat": "{{interface}} {{ssid}}",
+          "refId": "A"
+        }
+      ],
+      "description": "rx = traffic the modem received from that port/SSID (i.e. uploaded by your devices)."
+    },
+    {
+      "type": "timeseries",
+      "title": "Transmit per interface",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 33
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10
+          },
+          "unit": "bps"
+        }
+      },
+      "targets": [
+        {
+          "expr": "rate(modem_interface_tx_bytes_total{type=~\"lan|wlan\"}[5m]) * 8",
+          "legendFormat": "{{interface}} {{ssid}}",
+          "refId": "A"
+        }
+      ],
+      "description": "tx = traffic the modem sent to that port/SSID (i.e. downloaded by your devices)."
+    },
+    {
+      "type": "timeseries",
+      "title": "Errors & drops",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 33
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10
+          },
+          "unit": "pps"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum by (interface) (rate(modem_interface_rx_errors_total[5m]))",
+          "legendFormat": "{{interface}} rx errors",
+          "refId": "A"
+        },
+        {
+          "expr": "sum by (interface) (rate(modem_interface_tx_errors_total[5m]))",
+          "legendFormat": "{{interface}} tx errors",
+          "refId": "B"
+        },
+        {
+          "expr": "sum by (interface) (rate(modem_interface_rx_crc_errors_total[5m]))",
+          "legendFormat": "{{interface}} rx crc errors",
+          "refId": "C"
+        },
+        {
+          "expr": "sum by (interface) (rate(modem_interface_rx_drops_total[5m]))",
+          "legendFormat": "{{interface}} rx drops",
+          "refId": "D"
+        },
+        {
+          "expr": "sum by (interface) (rate(modem_interface_tx_drops_total[5m]))",
+          "legendFormat": "{{interface}} tx drops",
+          "refId": "E"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "LAN ports",
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 0,
+        "y": 41
+      },
+      "options": {
+        "showHeader": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left"
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "Down",
+                  "color": "text"
+                },
+                "10": {
+                  "text": "10M",
+                  "color": "orange"
+                },
+                "100": {
+                  "text": "100M",
+                  "color": "yellow"
+                },
+                "1000": {
+                  "text": "1G",
+                  "color": "green"
+                },
+                "2500": {
+                  "text": "2.5G",
+                  "color": "blue"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "targets": [
+        {
+          "expr": "modem_lan_port_speed_mbps or on(port) (modem_lan_port_up * 0)",
+          "instant": true,
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "job": true,
+              "instance": true,
+              "modem": true,
+              "device": true
+            },
+            "renameByName": {
+              "port": "Port",
+              "Value": "Speed"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "title": "Wi-Fi radios",
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 6,
+        "y": 41
+      },
+      "options": {
+        "showHeader": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left"
+          }
+        }
+      },
+      "targets": [
+        {
+          "expr": "modem_wifi_channel * on(band) group_left(standard, bandwidth, tx_power) modem_wifi_radio_info * on(band) group_left() (modem_wifi_radio_enabled > 0)",
+          "instant": true,
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "job": true,
+              "instance": true,
+              "modem": true,
+              "device": true
+            },
+            "renameByName": {
+              "band": "Band",
+              "standard": "Standard",
+              "bandwidth": "Bandwidth (MHz)",
+              "tx_power": "TX power",
+              "country": "Country",
+              "Value": "Channel"
+            }
+          }
+        }
+      ],
+      "description": "Only radios that are switched on are listed."
+    },
+    {
+      "type": "table",
+      "title": "DHCP leases",
+      "gridPos": {
+        "h": 7,
+        "w": 9,
+        "x": 15,
+        "y": 41
+      },
+      "options": {
+        "showHeader": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left"
+          },
+          "unit": "dtdurations"
+        }
+      },
+      "targets": [
+        {
+          "expr": "modem_dhcp_lease_expiry_seconds",
+          "instant": true,
+          "format": "table",
+          "refId": "A"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "job": true,
+              "instance": true,
+              "modem": true,
+              "device": true
+            },
+            "renameByName": {
+              "hostname": "Hostname",
+              "ip": "IP",
+              "mac": "MAC",
+              "Value": "Expires in"
+            },
+            "indexByName": {
+              "hostname": 0,
+              "ip": 1,
+              "mac": 2,
+              "Value": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Clients",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 48
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10
+          },
+          "unit": "short"
+        }
+      },
+      "targets": [
+        {
+          "expr": "modem_dhcp_leases{ip_version=\"ipv4\"}",
+          "legendFormat": "DHCP leases",
+          "refId": "A"
+        },
+        {
+          "expr": "modem_wifi_clients",
+          "legendFormat": "Wi-Fi clients",
+          "refId": "B"
+        },
+        {
+          "expr": "modem_neighbor_entries{ip_version=\"ipv4\"}",
+          "legendFormat": "ARP entries",
+          "refId": "C"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "CPU & memory",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 48
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "drawStyle": "line",
+            "fillOpacity": 10
+          },
+          "unit": "percent",
+          "max": 100,
+          "min": 0
+        }
+      },
+      "targets": [
+        {
+          "expr": "modem_cpu_usage_percent",
+          "legendFormat": "CPU",
+          "refId": "A"
+        },
+        {
+          "expr": "modem_memory_usage_percent",
+          "legendFormat": "memory",
+          "refId": "B"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "title": "Notes",
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 56
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "**Data source:** the modem's own web API (`/dm/tr98/?objs=...`), read by the exporter after logging in as the web UI does. No SNMP or TR-069 access is needed.\n\n**Optical values** are reported by this firmware as whole numbers (e.g. `-16` dBm), so small changes are not visible. **Traffic rates** come from byte counters, so they are real bits/sec. Short spikes are smoothed by the 5-minute `rate()` window."
+      }
+    }
+  ]
+}

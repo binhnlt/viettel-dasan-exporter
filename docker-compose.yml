@@ -1,0 +1,12 @@
+# Optional convenience wrapper to run just the exporter.
+# You bring your own Prometheus + Grafana (see examples/).
+services:
+  exporter:
+    build: ./exporter
+    # Or use a prebuilt image instead of build:
+    # image: ghcr.io/YOUR_USER/viettel-dasan-exporter:latest
+    container_name: modem-exporter
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "9877:9877"

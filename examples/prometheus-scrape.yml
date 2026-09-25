@@ -1,0 +1,8 @@
+# Add this job to your existing Prometheus prometheus.yml, under scrape_configs:
+  - job_name: modem
+    scrape_interval: 60s
+    scrape_timeout: 50s        # a scrape reads ~25 API objects; allow for slow links / proxies
+    static_configs:
+      - targets: ['THE_EXPORTER_HOST:9877']   # host running the modem exporter
+        labels:
+          device: viettel-h646gm-v
