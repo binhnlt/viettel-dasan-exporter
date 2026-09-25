@@ -95,7 +95,17 @@ proxy that took ~19 s during development, which is why the timeout above is gene
 ### Grafana dashboard (optional)
 
 Import [`examples/grafana-dashboard.json`](examples/grafana-dashboard.json) into
-Grafana (Dashboards → Import) and select your Prometheus data source when prompted.
+Grafana (Dashboards → Import). Variables at the top of the dashboard let you choose:
+
+| Variable | Purpose |
+|----------|---------|
+| **Data source** | Any Prometheus data source; no editing of the JSON needed |
+| **Job** | Prometheus `job` label(s) to show (multi-select, default *All*) |
+| **Modem** | `modem` label(s), i.e. `MODEM_NAME`, when you monitor several modems |
+| **Filters** | Ad-hoc `label = value` filters for any other label, e.g. the `device` / `location` labels you add in the scrape config |
+
+The dashboard's own tags (`viettel`, `dasan`, `gpon`, `modem`, `network`) can be changed under Dashboard settings.
+
 It shows:
 - reachability, uptime, fibre and internet status, CPU and memory
 - the fibre Rx power, colour-coded against the GPON B+ range
@@ -104,6 +114,9 @@ It shows:
 - LAN and Wi-Fi traffic per port/SSID, and errors
 - LAN port speeds, Wi-Fi radios and DHCP leases
 
+![alt text](image-1.png)
+![alt text](image.png)
+![alt text](image-2.png)
 ---
 
 ## Configuration

@@ -21,7 +21,80 @@
   "refresh": "1m",
   "schemaVersion": 39,
   "templating": {
-    "list": []
+    "list": [
+      {
+        "type": "datasource",
+        "name": "datasource",
+        "label": "Data source",
+        "query": "prometheus",
+        "current": {},
+        "hide": 0,
+        "refresh": 1,
+        "regex": "",
+        "options": []
+      },
+      {
+        "type": "query",
+        "name": "job",
+        "label": "Job",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "query": {
+          "query": "label_values(modem_up, job)",
+          "refId": "job"
+        },
+        "definition": "label_values(modem_up, job)",
+        "refresh": 2,
+        "includeAll": true,
+        "multi": true,
+        "allValue": ".*",
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "sort": 1,
+        "hide": 0,
+        "options": []
+      },
+      {
+        "type": "query",
+        "name": "modem",
+        "label": "Modem",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "query": {
+          "query": "label_values(modem_up{job=~\"$job\"}, modem)",
+          "refId": "modem"
+        },
+        "definition": "label_values(modem_up{job=~\"$job\"}, modem)",
+        "refresh": 2,
+        "includeAll": true,
+        "multi": true,
+        "allValue": ".*",
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "sort": 1,
+        "hide": 0,
+        "options": []
+      },
+      {
+        "type": "adhoc",
+        "name": "filters",
+        "label": "Filters",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "filters": [],
+        "hide": 0
+      }
+    ]
   },
   "panels": [
     {
@@ -84,10 +157,18 @@
       },
       "targets": [
         {
-          "expr": "modem_up",
-          "refId": "A"
+          "expr": "modem_up{job=~\"$job\", modem=~\"$modem\"}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "stat",
@@ -113,10 +194,18 @@
       },
       "targets": [
         {
-          "expr": "modem_uptime_seconds",
-          "refId": "A"
+          "expr": "modem_uptime_seconds{job=~\"$job\", modem=~\"$modem\"}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "stat",
@@ -167,10 +256,18 @@
       },
       "targets": [
         {
-          "expr": "modem_pon_link_up",
-          "refId": "A"
+          "expr": "modem_pon_link_up{job=~\"$job\", modem=~\"$modem\"}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "stat",
@@ -221,10 +318,18 @@
       },
       "targets": [
         {
-          "expr": "max(modem_wan_connection_up{service=~\".*INTERNET.*\",ip_version=\"ipv4\"})",
-          "refId": "A"
+          "expr": "max by (modem) (modem_wan_connection_up{job=~\"$job\", modem=~\"$modem\", service=~\".*INTERNET.*\",ip_version=\"ipv4\"})",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "stat",
@@ -265,10 +370,18 @@
       },
       "targets": [
         {
-          "expr": "modem_cpu_usage_percent",
-          "refId": "A"
+          "expr": "modem_cpu_usage_percent{job=~\"$job\", modem=~\"$modem\"}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "stat",
@@ -309,10 +422,18 @@
       },
       "targets": [
         {
-          "expr": "modem_memory_usage_percent",
-          "refId": "A"
+          "expr": "modem_memory_usage_percent{job=~\"$job\", modem=~\"$modem\"}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "stat",
@@ -361,11 +482,19 @@
       },
       "targets": [
         {
-          "expr": "modem_optical_rx_power_dbm",
-          "refId": "A"
+          "expr": "modem_optical_rx_power_dbm{job=~\"$job\", modem=~\"$modem\"}",
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
       ],
-      "description": "GPON class B+ receiver: roughly -8 to -27 dBm is healthy; below -27 dBm the link is at risk."
+      "description": "GPON class B+ receiver: roughly -8 to -27 dBm is healthy; below -27 dBm the link is at risk.",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "table",
@@ -388,10 +517,14 @@
       },
       "targets": [
         {
-          "expr": "modem_info",
+          "expr": "modem_info{job=~\"$job\", modem=~\"$modem\"}",
           "instant": true,
           "format": "table",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
       ],
       "transformations": [
@@ -404,7 +537,7 @@
               "Value": true,
               "job": true,
               "instance": true,
-              "modem": true,
+              "modem": false,
               "device": true
             },
             "renameByName": {
@@ -417,7 +550,8 @@
               "pon_version": "PON version",
               "olt_type": "OLT",
               "optical_type": "Optics",
-              "customer": "ISP"
+              "customer": "ISP",
+              "modem": "Modem"
             },
             "indexByName": {
               "model": 0,
@@ -431,7 +565,11 @@
             }
           }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "table",
@@ -454,10 +592,14 @@
       },
       "targets": [
         {
-          "expr": "modem_wan_info",
+          "expr": "modem_wan_info{job=~\"$job\", modem=~\"$modem\"}",
           "instant": true,
           "format": "table",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
       ],
       "transformations": [
@@ -499,7 +641,11 @@
             }
           }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "row",
@@ -532,16 +678,28 @@
       },
       "targets": [
         {
-          "expr": "rate(modem_interface_rx_bytes_total{type=\"wan\",service=~\".*INTERNET.*\"}[5m]) * 8",
+          "expr": "rate(modem_interface_rx_bytes_total{job=~\"$job\", modem=~\"$modem\", type=\"wan\",service=~\".*INTERNET.*\"}[5m]) * 8",
           "legendFormat": "download {{interface}}",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         },
         {
-          "expr": "rate(modem_interface_tx_bytes_total{type=\"wan\",service=~\".*INTERNET.*\"}[5m]) * 8",
+          "expr": "rate(modem_interface_tx_bytes_total{job=~\"$job\", modem=~\"$modem\", type=\"wan\",service=~\".*INTERNET.*\"}[5m]) * 8",
           "legendFormat": "upload {{interface}}",
-          "refId": "B"
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "timeseries",
@@ -563,17 +721,29 @@
       },
       "targets": [
         {
-          "expr": "rate(modem_interface_rx_bytes_total{type=\"pon\"}[5m]) * 8",
+          "expr": "rate(modem_interface_rx_bytes_total{job=~\"$job\", modem=~\"$modem\", type=\"pon\"}[5m]) * 8",
           "legendFormat": "rx",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         },
         {
-          "expr": "rate(modem_interface_tx_bytes_total{type=\"pon\"}[5m]) * 8",
+          "expr": "rate(modem_interface_tx_bytes_total{job=~\"$job\", modem=~\"$modem\", type=\"pon\"}[5m]) * 8",
           "legendFormat": "tx",
-          "refId": "B"
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
       ],
-      "description": "All traffic on the fibre port, including IPTV multicast and management VLANs."
+      "description": "All traffic on the fibre port, including IPTV multicast and management VLANs.",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "row",
@@ -606,16 +776,28 @@
       },
       "targets": [
         {
-          "expr": "modem_optical_rx_power_dbm",
+          "expr": "modem_optical_rx_power_dbm{job=~\"$job\", modem=~\"$modem\"}",
           "legendFormat": "Rx",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         },
         {
-          "expr": "modem_optical_tx_power_dbm",
+          "expr": "modem_optical_tx_power_dbm{job=~\"$job\", modem=~\"$modem\"}",
           "legendFormat": "Tx",
-          "refId": "B"
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "timeseries",
@@ -637,11 +819,19 @@
       },
       "targets": [
         {
-          "expr": "modem_optical_temperature_celsius",
+          "expr": "modem_optical_temperature_celsius{job=~\"$job\", modem=~\"$modem\"}",
           "legendFormat": "temperature",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "timeseries",
@@ -663,11 +853,19 @@
       },
       "targets": [
         {
-          "expr": "modem_optical_supply_voltage_volts",
+          "expr": "modem_optical_supply_voltage_volts{job=~\"$job\", modem=~\"$modem\"}",
           "legendFormat": "voltage",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "timeseries",
@@ -689,11 +887,19 @@
       },
       "targets": [
         {
-          "expr": "modem_optical_bias_current_milliamps",
+          "expr": "modem_optical_bias_current_milliamps{job=~\"$job\", modem=~\"$modem\"}",
           "legendFormat": "bias",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "row",
@@ -726,12 +932,20 @@
       },
       "targets": [
         {
-          "expr": "rate(modem_interface_rx_bytes_total{type=~\"lan|wlan\"}[5m]) * 8",
+          "expr": "rate(modem_interface_rx_bytes_total{job=~\"$job\", modem=~\"$modem\", type=~\"lan|wlan\"}[5m]) * 8",
           "legendFormat": "{{interface}} {{ssid}}",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
       ],
-      "description": "rx = traffic the modem received from that port/SSID (i.e. uploaded by your devices)."
+      "description": "rx = traffic the modem received from that port/SSID (i.e. uploaded by your devices).",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "timeseries",
@@ -753,12 +967,20 @@
       },
       "targets": [
         {
-          "expr": "rate(modem_interface_tx_bytes_total{type=~\"lan|wlan\"}[5m]) * 8",
+          "expr": "rate(modem_interface_tx_bytes_total{job=~\"$job\", modem=~\"$modem\", type=~\"lan|wlan\"}[5m]) * 8",
           "legendFormat": "{{interface}} {{ssid}}",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
       ],
-      "description": "tx = traffic the modem sent to that port/SSID (i.e. downloaded by your devices)."
+      "description": "tx = traffic the modem sent to that port/SSID (i.e. downloaded by your devices).",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "timeseries",
@@ -780,31 +1002,55 @@
       },
       "targets": [
         {
-          "expr": "sum by (interface) (rate(modem_interface_rx_errors_total[5m]))",
+          "expr": "sum by (modem, interface) (rate(modem_interface_rx_errors_total{job=~\"$job\", modem=~\"$modem\"}[5m]))",
           "legendFormat": "{{interface}} rx errors",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         },
         {
-          "expr": "sum by (interface) (rate(modem_interface_tx_errors_total[5m]))",
+          "expr": "sum by (modem, interface) (rate(modem_interface_tx_errors_total{job=~\"$job\", modem=~\"$modem\"}[5m]))",
           "legendFormat": "{{interface}} tx errors",
-          "refId": "B"
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         },
         {
-          "expr": "sum by (interface) (rate(modem_interface_rx_crc_errors_total[5m]))",
+          "expr": "sum by (modem, interface) (rate(modem_interface_rx_crc_errors_total{job=~\"$job\", modem=~\"$modem\"}[5m]))",
           "legendFormat": "{{interface}} rx crc errors",
-          "refId": "C"
+          "refId": "C",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         },
         {
-          "expr": "sum by (interface) (rate(modem_interface_rx_drops_total[5m]))",
+          "expr": "sum by (modem, interface) (rate(modem_interface_rx_drops_total{job=~\"$job\", modem=~\"$modem\"}[5m]))",
           "legendFormat": "{{interface}} rx drops",
-          "refId": "D"
+          "refId": "D",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         },
         {
-          "expr": "sum by (interface) (rate(modem_interface_tx_drops_total[5m]))",
+          "expr": "sum by (modem, interface) (rate(modem_interface_tx_drops_total{job=~\"$job\", modem=~\"$modem\"}[5m]))",
           "legendFormat": "{{interface}} tx drops",
-          "refId": "E"
+          "refId": "E",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "table",
@@ -854,10 +1100,14 @@
       },
       "targets": [
         {
-          "expr": "modem_lan_port_speed_mbps or on(port) (modem_lan_port_up * 0)",
+          "expr": "modem_lan_port_speed_mbps{job=~\"$job\", modem=~\"$modem\"} or on(modem, port) (modem_lan_port_up{job=~\"$job\", modem=~\"$modem\"} * 0)",
           "instant": true,
           "format": "table",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
       ],
       "transformations": [
@@ -878,7 +1128,11 @@
             }
           }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "table",
@@ -901,10 +1155,14 @@
       },
       "targets": [
         {
-          "expr": "modem_wifi_channel * on(band) group_left(standard, bandwidth, tx_power) modem_wifi_radio_info * on(band) group_left() (modem_wifi_radio_enabled > 0)",
+          "expr": "modem_wifi_channel{job=~\"$job\", modem=~\"$modem\"} * on(modem, band) group_left(standard, bandwidth, tx_power) modem_wifi_radio_info{job=~\"$job\", modem=~\"$modem\"} * on(modem, band) group_left() (modem_wifi_radio_enabled{job=~\"$job\", modem=~\"$modem\"} > 0)",
           "instant": true,
           "format": "table",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
       ],
       "transformations": [
@@ -926,11 +1184,22 @@
               "tx_power": "TX power",
               "country": "Country",
               "Value": "Channel"
+            },
+            "indexByName": {
+              "band": 0,
+              "Value": 1,
+              "standard": 2,
+              "bandwidth": 3,
+              "tx_power": 4
             }
           }
         }
       ],
-      "description": "Only radios that are switched on are listed."
+      "description": "Only radios that are switched on are listed.",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "table",
@@ -954,10 +1223,14 @@
       },
       "targets": [
         {
-          "expr": "modem_dhcp_lease_expiry_seconds",
+          "expr": "modem_dhcp_lease_expiry_seconds{job=~\"$job\", modem=~\"$modem\"}",
           "instant": true,
           "format": "table",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
       ],
       "transformations": [
@@ -986,7 +1259,11 @@
             }
           }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "timeseries",
@@ -1008,21 +1285,37 @@
       },
       "targets": [
         {
-          "expr": "modem_dhcp_leases{ip_version=\"ipv4\"}",
+          "expr": "modem_dhcp_leases{job=~\"$job\", modem=~\"$modem\", ip_version=\"ipv4\"}",
           "legendFormat": "DHCP leases",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         },
         {
-          "expr": "modem_wifi_clients",
+          "expr": "modem_wifi_clients{job=~\"$job\", modem=~\"$modem\"}",
           "legendFormat": "Wi-Fi clients",
-          "refId": "B"
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         },
         {
-          "expr": "modem_neighbor_entries{ip_version=\"ipv4\"}",
+          "expr": "modem_neighbor_entries{job=~\"$job\", modem=~\"$modem\", ip_version=\"ipv4\"}",
           "legendFormat": "ARP entries",
-          "refId": "C"
+          "refId": "C",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "timeseries",
@@ -1046,16 +1339,28 @@
       },
       "targets": [
         {
-          "expr": "modem_cpu_usage_percent",
+          "expr": "modem_cpu_usage_percent{job=~\"$job\", modem=~\"$modem\"}",
           "legendFormat": "CPU",
-          "refId": "A"
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         },
         {
-          "expr": "modem_memory_usage_percent",
+          "expr": "modem_memory_usage_percent{job=~\"$job\", modem=~\"$modem\"}",
           "legendFormat": "memory",
-          "refId": "B"
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          }
         }
-      ]
+      ],
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      }
     },
     {
       "type": "text",
@@ -1071,5 +1376,6 @@
         "content": "**Data source:** the modem's own web API (`/dm/tr98/?objs=...`), read by the exporter after logging in as the web UI does. No SNMP or TR-069 access is needed.\n\n**Optical values** are reported by this firmware as whole numbers (e.g. `-16` dBm), so small changes are not visible. **Traffic rates** come from byte counters, so they are real bits/sec. Short spikes are smoothed by the 5-minute `rate()` window."
       }
     }
-  ]
+  ],
+  "description": "Viettel / DASAN GPON modem exporter. Use the variables at the top to pick the data source, job, modem and extra label filters."
 }
